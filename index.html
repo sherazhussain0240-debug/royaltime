@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Royal Time | Watch Store</title>
+<style>
+:root{--bg:#0b0b0d;--panel:#171719;--gold:#d9ad55;--muted:#aaa49a;--line:#39332a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f1e5;font-family:Arial,sans-serif}
+header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}.crown{font-size:34px;color:var(--gold)}.brand-name{font-weight:bold;letter-spacing:4px;color:var(--gold)}.tagline{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:4px}
+button{cursor:pointer;border:0}.gold-btn{background:var(--gold);color:#15110a;padding:11px 15px;border-radius:8px;font-weight:bold}
+.layout{display:flex;min-height:calc(100vh - 110px)}aside{width:185px;padding:14px 10px;border-right:1px solid var(--line);flex-shrink:0}
+.menu-label{font-size:10px;color:var(--muted);letter-spacing:2px;padding:10px}
+.navbtn{display:block;width:100%;text-align:left;padding:12px;border-radius:9px;background:transparent;color:#c9c2b5;margin:3px 0}
+.navbtn.active,.navbtn:hover{background:#382d19;color:#f4c96c}
+main{padding:24px;min-width:0;flex:1;max-width:1200px;margin:auto;width:100%}
+.page{display:none}.page.active{display:block}.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px}
+.hero{padding:35px;background:linear-gradient(120deg,#302515,#111113);display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:20px}
+.eyebrow,.gold{color:var(--gold)}h1{font-size:clamp(32px,5vw,54px);margin:12px 0}.hero-watch{text-align:center;font-size:130px;color:var(--gold)}
+.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:16px}
+.watch-art{height:130px;border-radius:12px;background:radial-gradient(circle,#49402e,#191817 70%);display:grid;place-items:center;font-size:68px}
+.product-name{font-weight:bold;margin-top:12px}.price{color:var(--gold);margin-top:6px}
+input,textarea{background:#222226;border:1px solid #51452f;border-radius:8px;padding:11px;color:white;width:100%;margin-top:6px}
+label{display:block;font-size:13px;margin:12px 0}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+footer{border-top:1px solid var(--line);text-align:center;padding:16px;color:var(--muted);font-size:11px}
+@media(max-width:650px){.layout{display:block}aside{width:100%;border-right:0;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;padding:8px}.menu-label{display:none}.navbtn{white-space:nowrap;width:auto}.hero{grid-template-columns:1fr;padding:24px}.hero-watch{font-size:85px}main{padding:15px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><span class="crown">♛</span><div><div class="brand-name">ROYAL TIME</div><div class="tagline">EVERY SECOND, A NEW STYLE</div></div></div>
+ <button class="gold-btn" onclick="go('cart')">🛒 Cart <span id="cart-count">0</span></button>
+</header>
+<div class="layout">
+<aside>
+ <div class="menu-label">STORE MENU</div>
+ <button class="navbtn active" data-page="home" onclick="go('home')">⌂ Home</button>
+ <button class="navbtn" data-page="shop" onclick="go('shop')">◷ Watches</button>
+ <button class="navbtn" data-page="orders" onclick="go('orders')">▤ Orders</button>
+ <button class="navbtn" data-page="cart" onclick="go('cart')">🛒 Shopping Cart</button>
+ <button class="navbtn" data-page="about" onclick="go('about')">♛ About Brand</button>
+ <button class="navbtn" data-page="contact" onclick="go('contact')">✉ Contact</button>
+ <button class="navbtn" data-page="admin" onclick="go('admin')">⚙ Manage Store</button>
+</aside>
+<main>
+<section class="page active" id="home">
+ <div class="panel hero"><div><div class="eyebrow">WELCOME TO ROYAL TIME</div><h1>TIME IS YOUR<br><span class="gold">STYLE.</span></h1><p class="muted">Discover watches that define your personality.</p><button class="gold-btn" onclick="go('shop')">Explore Collection →</button></div><div class="hero-watch">⌚</div></div>
+ <h2>Featured Watches</h2><div id="featured" class="grid"></div>
+ <div class="panel" style="margin-top:20px"><b class="gold">Our Promise</b><p class="muted">Elegant designs. Timeless style. A royal experience.</p></div>
+</section>
+<section class="page" id="shop"><h2>Watch Collection</h2><p class="muted">Explore our sample collection.</p><input id="search" placeholder="Search watches..." oninput="renderShop()"><div id="products" class="grid"></div></section>
+<section class="page" id="cart"><h2>Shopping Cart</h2><div id="cart-items"></div><div class="panel" style="margin-top:15px"><div class="row"><b>Total</b><b class="gold" id="total">Rs. 0</b></div><button class="gold-btn" style="width:100%;margin-top:15px" onclick="go('contact')">Continue to Order</button></div></section>
+<section class="page" id="orders"><h2>My Orders</h2><div class="panel"><p class="gold">▤ Order history</p><p class="muted">This demo does not yet store orders on a server.</p></div></section>
+<section class="page" id="about"><h2 class="gold">About Royal Time</h2><div class="panel"><div class="hero-watch">♛</div><h2 style="text-align:center">ROYAL TIME</h2><p class="gold" style="text-align:center">Every Second, A New Style.</p><p class="muted">Royal Time is a watch business concept based in Pakistan, created to bring style, elegance and confidence to every wrist.</p></div></section>
+<section class="page" id="contact"><h2>Contact & Order</h2><p class="muted">Enter your details to prepare an order request.</p><form id="order-form" class="panel"><label>Your name<input required id="customer-name" placeholder="Enter your name"></label><label>Phone number<input required id="phone" placeholder="03XXXXXXXXX"></label><label>City<input required id="city" placeholder="Your city"></label><label>Message<textarea id="message" rows="3" placeholder="Your order details"></textarea></label><button class="gold-btn">Prepare Order Request</button></form><p id="feedback" class="gold"></p></section>
+<section class="page" id="admin"><h2>Store Management</h2><p class="muted">Add products to this demo store.</p><form id="add-form" class="panel"><label>Watch name<input id="new-name" required placeholder="Watch name"></label><label>Price in PKR<input id="new-price" type="number" min="1" required placeholder="e.g. 5000"></label><button class="gold-btn">Add Watch</button></form><div class="panel" style="margin-top:15px"><b>Store information</b><p class="muted">Brand: Royal Time · Market: Pakistan · Currency: PKR</p><p class="muted">Demo note: products are kept in this browser session only. No real payment or server is connected.</p></div></section>
+</main>
+</div>
+<footer>♛ ROYAL TIME · EVERY SECOND, A NEW STYLE</footer>
+<script>
+const products=[
+ {id:1,name:'Royal Classic',price:4500},{id:2,name:'Golden Elite',price:6500},
+ {id:3,name:'Royal Sport',price:5500},{id:4,name:'Black Luxury',price:8500}
+];
+let cart=[];
+const money=n=>'Rs. '+Number(n).toLocaleString('en-PK');
+function go(page){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(page).classList.add('active');
+ document.querySelectorAll('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
+ if(page==='cart')renderCart();if(page==='shop')renderShop();
+}
+function productCard(p){return `<div class="panel"><div class="watch-art">⌚</div><div class="product-name">${p.name}</div><div class="price">${money(p.price)}</div><button class="gold-btn" style="width:100%;margin-top:12px" onclick="addToCart(${p.id})">Add to Cart</button></div>`}
+function renderFeatured(){document.getElementById('featured').innerHTML=products.slice(0,2).map(productCard).join('')}
+function renderShop(){const q=document.getElementById('search').value.toLowerCase();document.getElementById('products').innerHTML=products.filter(p=>p.name.toLowerCase().includes(q)).map(productCard).join('')||'<p class="muted">No watches found.</p>'}
+function addToCart(id){cart.push(products.find(p=>p.id===id));document.getElementById('cart-count').textContent=cart.length}
+function renderCart(){document.getElementById('cart-items').innerHTML=cart.length?cart.map((p,i)=>`<div class="panel row" style="margin:10px 0"><div><b>${p.name}</b><div class="price">${money(p.price)}</div></div><button class="gold" onclick="removeItem(${i})">Remove</button></div>`).join(''):'<div class="panel muted">Your cart is empty. Visit Watches to add a product.</div>';document.getElementById('total').textContent=money(cart.reduce((s,p)=>s+p.price,0))}
+function removeItem(i){cart.splice(i,1);document.getElementById('cart-count').textContent=cart.length;renderCart()}
+document.getElementById('add-form').addEventListener('submit',e=>{e.preventDefault();products.push({id:Math.max(...products.map(p=>p.id))+1,name:document.getElementById('new-name').value,price:Number(document.getElementById('new-price').value)});e.target.reset();renderFeatured();renderShop();alert('Watch added to this demo store.')});
+document.getElementById('order-form').addEventListener('submit',e=>{e.preventDefault();const details=`Royal Time order request\nName: ${document.getElementById('customer-name').value}\nPhone: ${document.getElementById('phone').value}\nCity: ${document.getElementById('city').value}\nItems: ${cart.map(p=>p.name+' - '+money(p.price)).join(', ')||'Not selected'}\nTotal: ${money(cart.reduce((s,p)=>s+p.price,0))}\nMessage: ${document.getElementById('message').value}`;document.getElementById('feedback').textContent='Request prepared. Your store owner must connect WhatsApp or a backend to receive real orders.';console.log(details)});
+renderFeatured();renderShop();
+</script>
+</body>
+</html>
